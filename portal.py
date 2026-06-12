@@ -504,4 +504,12 @@ else:
         st.info("✅ No active alerts for your crops")
 
 st.sidebar.markdown("---")
-st.sidebar.caption("Built with ❤️ using Streamlit")
+st.sidebar.caption("Built with ❤️ using Streamlit")# Admin section - only visible to admin user
+if st.session_state.username == "admin":
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("🔧 Admin Panel")
+    if st.sidebar.button("View All Users"):
+        conn = sqlite3.connect('portal_data.db')
+        users_df = pd.read_sql_query("SELECT id, username, role, created_at FROM users", conn)
+        conn.close()
+        st.dataframe(users_df)
