@@ -12,12 +12,11 @@ import os
 
 
 # ==================== DATABASE SETUP ====================
-
 def init_db():
     conn = sqlite3.connect('portal_data.db')
     c = conn.cursor()
 
-    # Users table
+    # Users table with role column
     c.execute('''CREATE TABLE IF NOT EXISTS users
                  (
                      id
@@ -44,7 +43,13 @@ def init_db():
                      CURRENT_TIMESTAMP
                  )''')
 
-    # Students table (School)
+    # Check if role column exists, if not add it
+    c.execute("PRAGMA table_info(users)")
+    columns = [column[1] for column in c.fetchall()]
+    if 'role' not in columns:
+        c.execute("ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'")
+
+    # Students table
     c.execute('''CREATE TABLE IF NOT EXISTS students
                  (
                      id
@@ -70,7 +75,7 @@ def init_db():
                      CURRENT_TIMESTAMP
                  )''')
 
-    # Crops table (Farmers)
+    # Crops table
     c.execute('''CREATE TABLE IF NOT EXISTS crops
                  (
                      id
@@ -107,10 +112,6 @@ def init_db():
 
     conn.commit()
     conn.close()
-
-
-init_db()
-
 
 # ==================== HELPER FUNCTIONS ====================
 
