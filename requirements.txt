@@ -1,5 +1,3 @@
-from sphinx.util import requests
-
 streamlit
 pandas
 numpy
