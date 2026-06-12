@@ -10,6 +10,21 @@ from PIL import Image
 import io
 import os
 
+# FORCE RESET DATABASE - DELETE THIS LINE AFTER FIRST RUN
+if os.path.exists('portal_data.db'):
+    os.remove('portal_data.db')
+import streamlit as st
+import pandas as pd
+import numpy as np
+from datetime import datetime
+import plotly.express as px
+import sqlite3
+import bcrypt
+import requests
+from PIL import Image
+import io
+import os
+
 
 # ==================== DATABASE SETUP ====================
 def init_db():
